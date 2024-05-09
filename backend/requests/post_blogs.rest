@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1cnUiLCJpZCI6IjY2MzlkMzJmODA1M2Y5YjQ5MGU5ZjhmMyIsImlhdCI6MTcxNTIzMjc5OCwiZXhwIjoxNzE1MjM2Mzk4fQ.gZRZcvG7cGfWFJ7z08NTN5qB6cjrB6CwNKGwWoIlR0k
+
+{
+    "author": "John Doe",
+    "title":"Guru's book that the author stole ",
+    "url":"https://guruprasathgopal.com"
+}
