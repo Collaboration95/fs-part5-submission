@@ -113,6 +113,7 @@ import BlogForm from './components/BlogForm';
 
 const App = () => {
   const [notification, setNotification] = useState(null);
+
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -153,7 +154,7 @@ const App = () => {
       setPassword('');
     } catch (error) {
       if (error.response.status === 401) {
-        setNotification('Wrong username or password');
+        setNotification('error Wrong username or password');
         setUsername('');
         setPassword('');
       } else {
@@ -198,30 +199,45 @@ const App = () => {
     padding: 10,
     marginBottom: 10
   };
+  const errorNotificationStyle = {
+    color: 'red',
+    background: 'lightgrey',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10
+  };
+
   return (
     <div>
-      {notification !== null ? <div style={notificationStyle}>{notification}</div> : null}
-
-      {user === null ?
-        loginForm() :
-        <div>
-          <p>{user.username} is  logged-in</p>
-          <button onClick={()=>{
-            window.localStorage.removeItem('userCredentials')
-            setUser(null)
-          }}>Log Out </button>
-          <BlogForm
-            setNotification={setNotification}
-            setBlogs={setBlogs}
-            blogs={blogs}
-          />
+      {notification !== null ? (
+        <div style={notification.includes('error') ? errorNotificationStyle : notificationStyle}>
+          {notification}
         </div>
-      }
+      ) : null}
+
+      {user === null ? (
+        loginForm()
+      ) : (
+        <div>
+          <p>{user.username} is logged-in</p>
+          <button
+            onClick={() => {
+              window.localStorage.removeItem('userCredentials');
+              setUser(null);
+            }}
+          >
+            Log Out
+          </button>
+          <BlogForm setNotification={setNotification} setBlogs={setBlogs} blogs={blogs} />
+        </div>
+      )}
 
       <h2>Blogs</h2>
-      {blogs.map(blog =>
+      {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
-      )}
+      ))}
     </div>
   );
 };
