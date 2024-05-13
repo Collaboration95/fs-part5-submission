@@ -1,0 +1,12 @@
+
+PUT http://localhost:3001/api/blogs/6639c66aedcba0344295a56d
+Content-Type: application/json
+
+{
+    "title": "Title of this book is boring",
+    "author": "John Doe",
+    "url": "https://guruprasathgopal.com",
+    "likes": 10,
+    "user": "6639c657edcba0344295a569",
+    "id": "6639c66aedcba0344295a56d"
+}
