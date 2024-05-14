@@ -52,7 +52,7 @@ const Blog = ({ blog , onDelete}) => {
   }
 
   return (
-    <div>
+    <div className='blog'>
       <div>
         {expanded ? (
           <div style={expandedStyle}> 
@@ -65,7 +65,7 @@ const Blog = ({ blog , onDelete}) => {
           </div>
         ) : (
           <div style={blogStyle}>
-            <p>{blog.title} written by  {blog.author} <button onClick={toggleExpanded}>view details</button></p>
+            <div><div>{blog.title}</div> written by <div>{blog.author}</div> <button onClick={toggleExpanded}>view details</button></div>
           </div>
         )}
       </div>
