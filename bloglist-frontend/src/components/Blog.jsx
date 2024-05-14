@@ -35,7 +35,6 @@ const Blog = ({ blog , onDelete}) => {
   };
 
   const blogStyle = {
-
     width:'fit-content',
     border: 'solid',
     borderWidth: 2,

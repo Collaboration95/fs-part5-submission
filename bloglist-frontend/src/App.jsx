@@ -61,17 +61,8 @@ const App = () => {
       }, 5000);
     }
   };
-
  
-
-  const handleUsernameChange = event => {
-    setUsername(event.target.value);
-  };
-  const handlePasswordChange = event => {
-    setPassword(event.target.value);
-  };
-
-    const notificationStyle = {
+  const notificationStyle = {
     color: 'green',
     background: 'lightgrey',
     fontSize: 20,
@@ -90,52 +81,6 @@ const App = () => {
     marginBottom: 10
   };
 
-  
-  // const handleBlogDelete = async id => {
-  //   try {
-  //     console.log(id)
-  //     await blogService.deleteBlog(id);
-  //     setBlogs(blogs.filter(blog => blog.id !== id));
-  //     setNotification('Blog deleted successfully');
-  //     setTimeout(() => {
-  //       setNotification(null);
-  //     }, 5000);
-  //   } catch (error) {
-  //     setNotification('Error deleting blog');
-  //     setTimeout(() => {
-  //       setNotification(null);
-  //     }, 5000);
-  //   }
-  // };
-  // const handleBlogDelete = id => {
-  //   if (window.confirm(`Delete blog?`)) {
-  //     blogService.deleteBlog(id)
-  //       .then(() => {
-  //         setBlogs(blogs.filter(blog => blog.id !== id));
-  //         setNotification('Blog deleted successfully');
-  //         setTimeout(() => {
-  //           setNotification(null);
-  //         }, 5000);
-  //       })
-  //       .catch(error => {
-  //         console.error('Error deleting blog:', error);
-  //         setNotification('Error deleting blog');
-  //         setTimeout(() => {
-  //           setNotification(null);
-  //         }, 5000);
-  //       });
-  //   }
-  // };
-
-  const NotificationHandler = ({ message }) => {
-    if (message === null) {
-      return null;
-    }
-    setNoticication(message)
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
-  }
   const handleBlogDelete = blog => {
     blogService.deleteBlog(blog.id).then(response => {
       setBlogs(blogs.filter(b => b.id !== blog.id))
@@ -177,7 +122,6 @@ const App = () => {
     )
   }
 
-
   return (
     <div>
       <h2>Blogs App </h2>
@@ -189,9 +133,6 @@ const App = () => {
 
       {user === null ? (
         loginForm()
-
-  // <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} />
-
   // <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} />
       ) : (
         <div>
