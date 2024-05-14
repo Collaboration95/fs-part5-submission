@@ -39,6 +39,7 @@ const errorHandler = (error, request, response, next) => {
 }
 
 const getTokenFrom = request=>{
+
   const authorization = request.get('authorization')
 
   if(authorization && authorization.toLowerCase().startsWith('bearer ')){
@@ -51,7 +52,6 @@ const tokenExtractor = (request, response, next) => {
 
   const unverifiedToken = getTokenFrom(request);
   if (!unverifiedToken) {
-    console.log("no token provided");
     next();
   } else {
     try {
@@ -64,7 +64,6 @@ const tokenExtractor = (request, response, next) => {
     }
   }
 };
-
 
 module.exports = {
   requestLogger,

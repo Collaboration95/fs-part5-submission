@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import blogService from '../services/blogs';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog , onDelete}) => {
   const [expanded, setExpanded] = useState(false);
   const [likes,setLikes] = useState(blog.likes)
 
@@ -43,9 +43,17 @@ const Blog = ({ blog }) => {
     padding: 10
   }
 
+  const handleDelete = () => {
+    if(window.confirm(`Delete ${blog.title} by ${blog.author}`)){
+      onDelete(blog)
+    }
+    else{
+      console.log('Delete cancelled')
+    }
+  }
+
   return (
     <div>
-      
       <div>
         {expanded ? (
           <div style={expandedStyle}> 
@@ -54,6 +62,7 @@ const Blog = ({ blog }) => {
             <p>URL: {blog.url}</p>
             <p>Likes: {likes} <button onClick={updateBlog}>Like</button></p>
             <p>Added by: {blog.user.name}</p>
+            <button onClick={handleDelete}>delete</button>
           </div>
         ) : (
           <div style={blogStyle}>

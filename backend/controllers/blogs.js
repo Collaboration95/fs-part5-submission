@@ -39,8 +39,20 @@ blogsRouter.post('/', async (request, response, next) => {
     }
 });
 
+// blogsRouter.delete('/:id', async (request, response, next) => {
+//     try{
+//         console.log('Request token is ',request.token.id)
+//         console.log('Request id is ',id)
+//     }
+//     catch(error){
+//         next(error)
+//     }
+
+// })
+
 blogsRouter.delete('/:id', async (request, response, next) => {
     try {
+
         if (!request.token) {
             return response.status(401).json({ error: 'token missing, this route requires auth token' });
         }
