@@ -37,3 +37,15 @@ test('checks default render methods',()=>{
     expect(titleElement).toBeDefined()
 })
 
+
+test('5.14 clicking view details expands the blog ', ()=>{
+  render(<Blog blog={blog} />)
+  const button = screen.getByText('view details')
+  userEvent.click(button)
+  const urlElement = screen.queryByText(blog.url)
+  const likesElement = screen.queryByText(blog.likes)
+  expect(urlElement).toBeDefined()
+  expect(likesElement).toBeDefined()
+  
+
+})
