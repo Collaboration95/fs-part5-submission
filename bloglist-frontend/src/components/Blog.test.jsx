@@ -46,6 +46,26 @@ test('5.14 clicking view details expands the blog ', ()=>{
   const likesElement = screen.queryByText(blog.likes)
   expect(urlElement).toBeDefined()
   expect(likesElement).toBeDefined()
-  
-
 })
+
+test('5.15 clicking like button twice calls event handler twice', async () => {
+  const mockHandler = vi.fn().mockResolvedValue({ status: 'success' });
+  const blog = {
+    title: 'Test Blog',
+    author: 'Test Author',
+    url: 'http://testblog.com',
+    likes: 0,
+    user: { id: '123', name: 'Test User' }
+  };
+
+  render(<Blog blog={blog} onLike={mockHandler} />);
+
+  const button = screen.getByText('view details');
+  await userEvent.click(button);
+
+  const likeButton = screen.getByText('LikeButton');
+  await userEvent.click(likeButton);
+  await userEvent.click(likeButton);
+
+  expect(mockHandler).toHaveBeenCalledTimes(2);
+});

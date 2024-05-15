@@ -95,7 +95,7 @@ const Blog = ({ blog , onDelete,onLike}) => {
          style={buttonStyle}
          onClick={updateBlog}
        >
-         Like
+         LikeButton
        </button>
      </p>
      <p style={paragraphStyle2}>Added by: {blog.user.name}</p>
