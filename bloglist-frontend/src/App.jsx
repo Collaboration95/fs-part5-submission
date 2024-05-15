@@ -96,8 +96,26 @@ const App = () => {
         setNotification(null)
       }, 5000)
     })
-
   }
+
+  const handleLikes = blog => {
+    const Blogid = blog.id;
+    const updatedBlog = {
+      ...blog,
+      user: blog.user.id,
+      likes: blog.likes + 1,
+    };
+  
+    return blogService.update(Blogid, updatedBlog)
+      .then(response => {
+        return {status: 'success', data: response};
+      })
+      .catch(error => {
+        console.log('error', error);
+        throw error; // re-throw the error to handle it in the calling function
+      });
+  };
+  
 
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? 'none' : '' }
@@ -133,7 +151,6 @@ const App = () => {
 
       {user === null ? (
         loginForm()
-  // <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} />
       ) : (
         <div>
           <p>{user.username} is logged-in</p>
@@ -152,12 +169,9 @@ const App = () => {
       </div>
       )}
     <br/>
-      {/* {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))} */}
   {blogs.sort((a, b) => a.likes - b.likes) // Sort blogs by likes in descending order
           .map((blog) => (
-              <Blog key={blog.id} onDelete={handleBlogDelete} blog={blog} />
+              <Blog key={blog.id} onLike={handleLikes} onDelete={handleBlogDelete} blog={blog} />
           ))
     }
     </div>

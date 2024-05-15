@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import blogService from '../services/blogs';
 
-const Blog = ({ blog , onDelete}) => {
+const Blog = ({ blog , onDelete,onLike}) => {
   const [expanded, setExpanded] = useState(false);
   const [likes,setLikes] = useState(blog.likes)
 
@@ -10,37 +10,59 @@ const Blog = ({ blog , onDelete}) => {
   };
 
   const updateBlog = () => { 
-    const Blogid = blog.id
-    const updatedBlog = {
-      ...blog,
-      user:blog.user.id,
-      likes: likes + 1
-    }
-
-    blogService.update(Blogid,updatedBlog).then(response => {
-      setLikes(likes+1)
-    }).catch(error => {
-      console.log('error', error)
-    })
-
+    onLike(blog).then(response=>
+      { 
+        if(response.status=='success'){setLikes(likes+1)} else{console.log('error',response)}}
+    )
+    .catch(error=>console.log('error',error))
   }
 
-  const expandedStyle = {
-    border: 'solid',
-    padding: 10,
-    borderWidth: 1,
-    marginBottom: 6,
-  backgroundColor: '#f0f0f1',
-    width:'fit-content'
-  };
-
   const blogStyle = {
-    width:'fit-content',
     border: 'solid',
+    width: 'fit-content',
     borderWidth: 2,
     marginBottom: 5,
     padding: 10
-  }
+  };
+  
+  const inlineBlockStyle = {
+    display: 'inline-block',
+    marginRight: '10px' // Optional: Adds spacing between elements
+  };
+  
+  const paragraphStyle = {
+    display: 'inline',
+    margin: 0
+  };
+  
+  const expandedStyle = {
+    border: '1px solid #ccc',
+    padding: '15px',
+    marginBottom: '10px',
+    backgroundColor: '#f0f0f1',
+    borderRadius: '8px',
+    width: 'fit-content',
+    font: '30px Arial, sans-serif',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  };
+  
+  const paragraphStyle2 = {
+    margin: '5px 0',
+    fontSize: '20px',
+    color: '#333',
+  };
+  
+  const buttonStyle = {
+    padding: '5px 10px',
+    border: 'none',
+    backgroundColor: '#007BFF',
+    color: '#fff',
+    borderRadius: '3px',
+    cursor: 'pointer',
+    marginLeft: '5px',
+    transition: 'background-color 0.3s ease', // optional for smooth background changes
+  };
+  
 
   const handleDelete = () => {
     if(window.confirm(`Delete ${blog.title} by ${blog.author}`)){
@@ -55,18 +77,46 @@ const Blog = ({ blog , onDelete}) => {
     <div className='blog'>
       <div>
         {expanded ? (
-          <div style={expandedStyle}> 
-            <p>Title: {blog.title} <button onClick={toggleExpanded}>view details</button></p>
-            <p>Author: {blog.author}</p>
-            <p>URL: {blog.url}</p>
-            <p>Likes: {likes} <button onClick={updateBlog}>Like</button></p>
-            <p>Added by: {blog.user.name}</p>
-            <button onClick={handleDelete}>delete</button>
-          </div>
+     <div style={expandedStyle}>
+     <p style={paragraphStyle2}>
+       Title: {blog.title}
+       <button
+         style={buttonStyle}
+         onClick={toggleExpanded}
+       >
+         Hide
+       </button>
+     </p>
+     <p style={paragraphStyle2}>Author: {blog.author}</p>
+     <p style={paragraphStyle2}>URL: {blog.url}</p>
+     <p style={paragraphStyle2}>
+       Likes: {likes}
+       <button
+         style={buttonStyle}
+         onClick={updateBlog}
+       >
+         Like
+       </button>
+     </p>
+     <p style={paragraphStyle2}>Added by: {blog.user.name}</p>
+     <button
+       style={{ 
+         ...buttonStyle, 
+         backgroundColor: '#dc3545',
+       }}
+       onClick={handleDelete}
+     >
+       Delete
+     </button>
+   </div>
         ) : (
           <div style={blogStyle}>
-            <div><div>{blog.title}</div> written by <div>{blog.author}</div> <button onClick={toggleExpanded}>view details</button></div>
-          </div>
+          <p style={paragraphStyle}>{blog.title} </p>
+          <span style={inlineBlockStyle}> written by </span>
+          <span style={inlineBlockStyle}>{blog.author}</span>
+          <button onClick={toggleExpanded} style={inlineBlockStyle}>view details</button>
+        </div>
+        
         )}
       </div>
     </div>
