@@ -116,6 +116,19 @@ const App = () => {
       });
   };
   
+  const handleAddBlog = ({title,author,url}) =>{
+
+    return blogService.create({title,author,url})
+    .then(response=>{
+      return {status:'success',data:response};
+    })
+    .catch(error=>{
+      console.error('Error adding blog:', error);
+      setNotification('Failed to add blog. Please try again later.');
+      throw error;
+    });
+
+  }
 
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? 'none' : '' }
@@ -164,7 +177,7 @@ const App = () => {
           </button>
           <br/>
           <Togglable buttonLabel="new blog">
-          <BlogForm setNotification={setNotification} setBlogs={setBlogs} blogs={blogs} />
+          <BlogForm onAdd={handleAddBlog} setNotification={setNotification} setBlogs={setBlogs} blogs={blogs} />
           </Togglable>
       </div>
       )}

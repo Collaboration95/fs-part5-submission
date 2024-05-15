@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
+import BlogForm from './BlogForm'
 // import 
 
 const blog = {
@@ -69,3 +70,24 @@ test('5.15 clicking like button twice calls event handler twice', async () => {
 
   expect(mockHandler).toHaveBeenCalledTimes(2);
 });
+
+test ('5.16 new blog form calls event handler with correct details', async ()=>{
+  const mockHandler = vi.fn().mockResolvedValue({ status: 'success' });
+  const newBlog = {
+    title: 'New Blog',
+    author: 'New Author',
+    url: 'http://newblog.com',
+  };
+  render(<BlogForm onAdd={mockHandler} />);
+  screen.debug()
+  const titleInput = screen.getByLabelText('Title:');
+  const authorInput = screen.getByLabelText('Author:'); 
+  const urlInput = screen.getByLabelText('URL:');
+  const submitButton = screen.getByText('Add Blog');
+  await userEvent.type(titleInput, newBlog.title);
+  await userEvent.type(authorInput, newBlog.author);
+  await userEvent.type(urlInput, newBlog.url);
+  await userEvent.click(submitButton);
+  expect(mockHandler).toHaveBeenCalledWith(newBlog);
+  expect(mockHandler).toHaveBeenCalledTimes(1);
+} );
