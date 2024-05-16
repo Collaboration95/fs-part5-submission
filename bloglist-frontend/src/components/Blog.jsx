@@ -12,7 +12,7 @@ const Blog = ({ blog , onDelete,onLike}) => {
   const updateBlog = () => { 
     onLike(blog).then(response=>
       { 
-        if(response.status=='success'){setLikes(likes+1)} else{console.log('error',response)}}
+        if(response.status=='success'){setLikes(likes+1)} else{console.log('erro r',response)}}
     )
     .catch(error=>console.log('error',error))
   }
@@ -89,17 +89,19 @@ const Blog = ({ blog , onDelete,onLike}) => {
      </p>
      <p style={paragraphStyle2}>Author: {blog.author}</p>
      <p style={paragraphStyle2}>URL: {blog.url}</p>
-     <p style={paragraphStyle2}>
-       Likes: {likes}
+     <p style={paragraphStyle2} >
+       Likes: <span class="like-count">{likes}</span>
        <button
+        className='like-button'
          style={buttonStyle}
          onClick={updateBlog}
        >
-         LikeButton
+         like
        </button>
      </p>
      <p style={paragraphStyle2}>Added by: {blog.user.name}</p>
      <button
+     className='delete-button'
        style={{ 
          ...buttonStyle, 
          backgroundColor: '#dc3545',

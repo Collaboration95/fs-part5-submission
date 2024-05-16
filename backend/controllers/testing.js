@@ -8,10 +8,14 @@ router.get('/reset', async (request, response) => {
 })
 
 router.post('/reset', async (request, response) => {
-  await Blog.deleteMany({})
-  await User.deleteMany({})
-
-  response.status(204).end()
-})
+  try {
+    await Blog.deleteMany({});
+    await User.deleteMany({});
+    
+    response.status(200).json({ message: 'Database reset successful. All blogs and users have been deleted.' });
+  } catch (error) {
+    response.status(500).json({ message: 'Database reset failed.', error: error.message });
+  }
+});
 
 module.exports = router
